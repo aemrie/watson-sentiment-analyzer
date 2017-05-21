@@ -1,3 +1,9 @@
+// Post data to Watson
+// Wait for response from Watson
+    // Display data
+
+
+
 (function () {
 
   function init(){
@@ -15,7 +21,7 @@
       $('.ajaxLoader').css('display', 'inline-block');
 
 
-      //make the AJAX call
+      // make the AJAX call
       $.ajax({
         url: '/form',
         type: 'POST',

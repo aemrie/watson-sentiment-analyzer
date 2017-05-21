@@ -16,19 +16,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //tell express that www is the root of our public web folder
 app.use(express.static(path.join(__dirname, 'www')));
 
+var request = require('request');
+
 //tell express what to do when the /form route is requested
 app.post('/form',function(req, res){
 	res.setHeader('Content-Type', 'application/json');
 
-	//mimic a slow network connection
+
+    //mimic a slow network connection
 	setTimeout(function(){
 
-		res.send(JSON.stringify({
-			firstName: req.body.firstName || null,
-			lastName: req.body.lastName || null
-		}));
+		var inputText = req.body.firstName;
+        request.post({url:'https://tweet-analyzer-watson.mybluemix.net/analyze', form: {text: inputText}}, function(err,httpResponse,body){
+        	var newData = JSON.parse(body);
+        	console.log("Incoming Data from Watson: ", newData);
 
-	}, 1000)
+            var score = newData["score"];
+            var positive = newData["positive"];
+            var negative = newData["negative"];
+            var tokens = newData["tokens"];
+
+            res.send(JSON.stringify({
+                score: score || "0",
+                positive: positive || "None",
+				negative: body.negative || "None",
+				tokens: tokens || null
+            }));
+        });
+
+	}, 1000);
 
 	//debugging output for the terminal
 	console.log('you posted: First Name: ' + req.body.firstName + ', Last Name: ' + req.body.lastName);
