@@ -26,8 +26,7 @@
         url: '/form',
         type: 'POST',
         data: {
-          firstName: testForm.firstName.value,
-          lastName: testForm.lastName.value
+          inputText: testForm.inputText.value
         },
         success: postSuccessHandler
       });
@@ -35,6 +34,8 @@
 
   function postSuccessHandler (jsonData) {
     var $data = $('#post-results-container .data');
+
+    console.log("Hello");
 
     //reset the UI
     $data.html('');

@@ -26,7 +26,7 @@ app.post('/form',function(req, res){
     //mimic a slow network connection
 	setTimeout(function(){
 
-		var inputText = req.body.firstName;
+		var inputText = req.body.inputText;
         request.post({url:'https://tweet-analyzer-watson.mybluemix.net/analyze', form: {text: inputText}}, function(err,httpResponse,body){
         	var newData = JSON.parse(body);
         	console.log("Incoming Data from Watson: ", newData);
@@ -38,16 +38,13 @@ app.post('/form',function(req, res){
 
             res.send(JSON.stringify({
                 score: score || "0",
-                positive: positive || "None",
-				negative: body.negative || "None",
+                positive: positive || "",
+				negative: body.negative || "",
 				tokens: tokens || null
             }));
         });
 
 	}, 1000);
-
-	//debugging output for the terminal
-	console.log('you posted: First Name: ' + req.body.firstName + ', Last Name: ' + req.body.lastName);
 });
 
 //wait for a connection
