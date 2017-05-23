@@ -6,12 +6,12 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	//require the path nodejs module
 	path = require("path");
-	
+
 //support parsing of application/json type post data
 app.use(bodyParser.json());
 
 //support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //tell express that www is the root of our public web folder
 app.use(express.static(path.join(__dirname, 'www')));
@@ -39,8 +39,8 @@ app.post('/form',function(req, res){
             res.send(JSON.stringify({
                 score: score || "0",
                 positive: positive || "",
-				negative: body.negative || "",
-				tokens: tokens || null
+								negative: negative || "",
+								tokens: tokens || null
             }));
         });
 
